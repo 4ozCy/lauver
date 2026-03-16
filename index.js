@@ -37,10 +37,12 @@ const client = new Client({
 });
 
 const LAVA_NODES = [
-  { name: "Node1", url: "lavalink.techpoint.africa:2333", auth: "techpoint",        secure: false },
-  { name: "Node2", url: "lavalink-v4.oggy.ovh:443",       auth: "oggy",             secure: true  },
-  { name: "Node3", url: "lavalink.lexnet.ovh:443",         auth: "lexnet",           secure: true  },
-  { name: "Node4", url: "lavalink.darrennathanael.com:443", auth: "BarrenDo!",       secure: true  },
+  {
+    host: "217.154.201.164",
+    port: 5023,
+    password: "3302",
+    secure: false
+  }
 ];
 
 const kazagumo = new Kazagumo({
