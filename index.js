@@ -37,7 +37,11 @@ const client = new Client({
 });
 
 const player = new Player(client, { skipFFmpeg: false });
-player.extractors.register(YoutubeiExtractor, {});
+player.extractors.register(YoutubeiExtractor, {
+  streamOptions: {
+    useClient: "WEB_EMBEDDED",
+  },
+});
 
 const whitelist      = new Set([OWNER]);
 const cooldowns      = new Collection();
