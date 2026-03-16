@@ -38,9 +38,8 @@ const client = new Client({
 
 const player = new Player(client, { skipFFmpeg: false });
 player.extractors.register(YoutubeiExtractor, {
-  streamOptions: {
-    useClient: "ANDROID",
-  },
+  cookie: "VISITOR_INFO1_LIVE=s53wQHo2288; VISITOR_PRIVACY_METADATA=CgJLSBIEGgAgDA%3D%3D; PREF=f6=40000000&tz=Asia.Phnom_Penh&f7=100&f5=30000&f4=4000000; __Secure-1PSIDTS=sidts-CjQB7I_69I71ZqwefqLzXi1mXQVEeG2o1_LA4RiWMIT48lWHF2J6TWcZs8QkWU2avMVCMuSREAA; __Secure-3PSIDTS=sidts-CjQB7I_69I71ZqwefqLzXi1mXQVEeG2o1_LA4RiWMIT48lWHF2J6TWcZs8QkWU2avMVCMuSREAA; HSID=AbPqd0hpi7zjrXVDS; SSID=An3AuT7wBErc2GnvW; APISID=NJO_3Kn5Tlv3UO6k/AofEwHxJ3LduuuKtE; SAPISID=hpzXXtnjbyj774Ze/AB4Oy5KMkMqD-j6-h; __Secure-1PAPISID=hpzXXtnjbyj774Ze/AB4Oy5KMkMqD-j6-h; __Secure-3PAPISID=hpzXXtnjbyj774Ze/AB4Oy5KMkMqD-j6-h; LOGIN_INFO=AFmmF2swRQIhANsHLW2jAnvyd8V383IwQsuJKlX1p_Sn0uVUjYtjIiI3AiBP2oMO2Ttp25R_XZQiCZBZE1hBxpZnnRPzc_DDpGQalA:QUQ3MjNmeWhSWldjM0UtTk1oVnVoY1loS0JqXzdkdlFPZVF4dHBJV19pLWZOdExGb0RianVWYzc1bFRjZnVLT1RodTVOVWhuUDVkT0tBa3dGLVh2eXh6VjRYU1hiNW1CZjZwT3ozQXI3NUFqRkF4UFVtV3BlRlJ1X1czSzZqMkZaTm1ZZDZzdU05c1RKd19kbW5Ua3JWdnJSS08tY0NOQ2tB; SID=g.a0007wjiEvD6JtvfPu9lJ4_iWL7nsZOYiez4_1kxqJDjlHi6GzF3lHgOBoFs_FRkgtKvrpqgYgACgYKAdoSARMSFQHGX2MiuDtj3fDbgq6VsdFdF6BKPxoVAUF8yKpRkGCqntFgyrDfp_nP_mQs0076; __Secure-1PSID=g.a0007wjiEvD6JtvfPu9lJ4_iWL7nsZOYiez4_1kxqJDjlHi6GzF337PGZRgbjlfcnmnfob4V0wACgYKARISARMSFQHGX2MirmI77laHcR1cYuPBN7ZMdxoVAUF8yKpxa0z6ilwL99n_I4xrotv90076; __Secure-3PSID=g.a0007wjiEvD6JtvfPu9lJ4_iWL7nsZOYiez4_1kxqJDjlHi6GzF33wuPoBUjdVmCaUSddY9wOAACgYKASASARMSFQHGX2Mi4SLLKmqR3WnZMzG_IchJLBoVAUF8yKrVUlNprvEt1lQppgwGZKQQ0076; SIDCC=AKEyXzX_FeJxy3gQsheiaAo85k2w_mBeB8D0ctTSCiHr0BOvwfcNo7Sa6R1BIRfrtFKCdYJu6A; __Secure-1PSIDCC=AKEyXzXiu4YlgXGlVoiZBxijZmGOn3smGCaDUYkf4RXuBlkVBDYEEUOoyPTwxy-WVH5FZbhm_A; __Secure-3PSIDCC=AKEyXzVSDz6u7Zn8IR6YTVaeCzQBjBwkbjJBEUiKtRdQnpRF8f0KGxyFAYZQ_uzhyayzMpr_H0I; VISITOR_INFO1_LIVE=G2wgmq-zt7E; VISITOR_PRIVACY_METADATA=CgJLSBIEGgAgZg%3D%3D; YSC=7o4ezQxYsZc",
+  streamOptions: { useClient: "WEB" },
 });
 
 const whitelist      = new Set([OWNER]);
@@ -1756,7 +1755,7 @@ setInterval(async () => {
 client.once("ready", () => {
   const total = CATEGORIES.reduce((t, cat) => t + cat.list.length, 0);
   console.log("✅  " + client.user.tag + "  |  prefix: " + PREFIX + "  |  commands: " + total);
-  client.user.setPresence({ status: "online", activities: [{ name: "Vibing to your favorite tracks.", type: ActivityType.Custom }] });
+  client.user.setPresence({ status: "online", activities: [{ name: "listening to laufey", type: ActivityType.Custom }] });
 });
 
 const server = http.createServer((req, res) => { res.writeHead(200); res.end("OK"); });
