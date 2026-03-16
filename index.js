@@ -36,7 +36,7 @@ const client = new Client({
   partials: [Partials.Message, Partials.Channel, Partials.GuildMember],
 });
 
-const player = new Player(client);
+const player = new Player(client, { skipFFmpeg: false });
 player.extractors.register(YoutubeiExtractor, {});
 
 const whitelist      = new Set([OWNER]);
@@ -204,7 +204,8 @@ player.events.on("emptyQueue", (queue) => {
   c.addTextDisplayComponents(tx("## 🎵 Queue Ended\nNo more tracks in the queue."));
   queue.metadata.channel.send({ components: [c], flags: F, allowedMentions: { parse: [] } });
 });
-player.events.on("playerError", (queue, err) => console.error("[PLAYER]", err));
+player.events.on("playerError", (queue, err) => console.error("[PLAYER ERROR]", err));
+player.events.on("error", (queue, err) => console.error("[PLAYER ERROR]", err));
 
 const registry   = new Collection();
 const CATEGORIES = [
