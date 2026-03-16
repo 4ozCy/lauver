@@ -14,7 +14,7 @@ const https  = require("https");
 const http   = require("http");
 const crypto = require("crypto");
 const { Player, QueueRepeatMode } = require("discord-player");
-const { YoutubeiExtractor }       = require("discord-player-youtubei");
+const { YoutubeiExtractor } = require("discord-player-youtubei");
 
 const TOKEN  = process.env.TOKEN;
 const PREFIX = ".";
