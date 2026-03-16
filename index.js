@@ -2962,7 +2962,7 @@ client.once("ready", () => {
   console.log("✅  " + client.user.tag + "  |  prefix: " + PREFIX + "  |  commands: " + total);
   client.user.setPresence({
     status: "online",
-    activities: [{ name: "Vibing to your favorite tracks.", type: ActivityType.Custom }],
+    activities: [{ name: "Made By: @4zcy", type: ActivityType.Custom }],
   });
 });
 
