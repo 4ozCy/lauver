@@ -39,7 +39,7 @@ const client = new Client({
 const player = new Player(client, { skipFFmpeg: false });
 player.extractors.register(YoutubeiExtractor, {
   streamOptions: {
-    useClient: "WEB_EMBEDDED",
+    useClient: "ANDROID",
   },
 });
 
