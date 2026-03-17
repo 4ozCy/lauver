@@ -16,11 +16,11 @@ const http  = require("http");
 const { Kazagumo } = require("kazagumo");
 const { Connectors } = require("shoukaku");
 
-const TOKEN     = process.env.TOKEN;
-const PREFIX    = ".";
-const OWNER     = "1107744228773220473";
+const TOKEN = process.env.TOKEN;
+const PREFIX = ".";
+const OWNER = "1107744228773220473";
 
-if (!TOKEN)     { console.error("Missing TOKEN");     process.exit(1); }
+if (!TOKEN){ console.error("Missing TOKEN");process.exit(1); }
 
 const client = new Client({
   intents: [
@@ -1495,7 +1495,7 @@ async function handleMusicSlash(interaction) {
 
 client.once("clientReady", async () => {
   console.log("[READY] Logged in as " + client.user.tag);
-  client.user.setActivity("🎵 /play | .help", { type: ActivityType.Custom });
+  client.user.setActivity("Made By: @4zcy", { type: ActivityType.Custom });
 
   const MUSIC_NAMES = new Set(["play","skip","stop","pause","resume","nowplaying","queue","volume","loop","shuffle","seek","remove","skipto","clearqueue","lyrics","spotify","join","disconnect","movehere"]);
 
