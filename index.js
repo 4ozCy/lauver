@@ -39,7 +39,7 @@ const client = new Client({
 const LAVA_NODES = [
 {
   "url": "lava-v4.ajieblogs.eu.org:443",
-  "password": "https://dsc.gg/ajidevserver",
+  "auth": "https://dsc.gg/ajidevserver",
   "secure": true
 }
 ];
