@@ -1495,7 +1495,7 @@ async function handleMusicSlash(interaction) {
 
 client.once("ready", async () => {
   console.log("[READY] Logged in as " + client.user.tag);
-  client.user.setActivity("🎵 /play | .help", { type: ActivityType.Listening });
+  client.user.setActivity("Made By: @4zcy", { type: ActivityType.Custom });
 
   const seen = new Set();
   const prefixSlash = [];
