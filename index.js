@@ -38,8 +38,7 @@ const client = new Client({
 
 const LAVA_NODES = [
 {
-  "host": "lava-v4.ajieblogs.eu.org",
-  "port": 443,
+  "url": "lava-v4.ajieblogs.eu.org:443",
   "password": "https://dsc.gg/ajidevserver",
   "secure": true
 }
@@ -1801,7 +1800,7 @@ setInterval(async () => {
 client.once("ready", () => {
   const total = CATEGORIES.reduce((t, cat) => t + cat.list.length, 0);
   console.log("✅  " + client.user.tag + "  |  prefix: " + PREFIX + "  |  commands: " + total);
-  client.user.setPresence({ status: "online", activities: [{ name: "Vibing to your favorite tracks.", type: ActivityType.Custom }] });
+  client.user.setPresence({ status: "online", activities: [{ name: "listening to laufey", type: ActivityType.Custom }] });
 });
 
 const server = http.createServer((req, res) => { res.writeHead(200); res.end("OK"); });
