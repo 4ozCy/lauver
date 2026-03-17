@@ -37,12 +37,12 @@ const client = new Client({
 });
 
 const LAVA_NODES = [
-  {
-    host: "217.154.201.164",
-    port: 5023,
-    password: "3302",
-    secure: false
-  }
+{
+  "host": "lava-v4.ajieblogs.eu.org",
+  "port": 443,
+  "password": "https://dsc.gg/ajidevserver",
+  "secure": true
+}
 ];
 
 const kazagumo = new Kazagumo({
