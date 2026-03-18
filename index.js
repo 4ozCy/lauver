@@ -34,16 +34,12 @@ const client = new Client({
 
 const LAVA_NODES = [{ url: "lava-v4.ajieblogs.eu.org:443", auth: "https://dsc.gg/ajidevserver", secure: true }];
 
-// ---- Voice Channel Status (currently playing track) ----
-// Discord shows a short "channel status" line under a voice channel name.
-// discord.js doesn't expose this yet, so we call REST directly.
 async function _setVoiceChannelStatus(channelId, status = "") {
   if (!channelId) return;
   const safe = String(status ?? "").slice(0, 100);
   try {
     await client.rest.put(`/channels/${channelId}/voice-status`, { body: { status: safe } });
   } catch (e) {
-    // Don't crash the bot if Discord rejects this (missing perms / feature disabled / endpoint changes).
     console.warn("[VC STATUS] Could not set voice channel status:", e?.rawError?.message || e?.message || e);
   }
 }
