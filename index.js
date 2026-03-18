@@ -34,23 +34,18 @@ const client = new Client({
 
 const LAVA_NODES = [{ url: "lava-v4.ajieblogs.eu.org:443", auth: "https://dsc.gg/ajidevserver", secure: true }];
 
-// ---- Voice Channel Status (currently playing track) ----
-// Discord shows a short "channel status" line under a voice channel name.
-// discord.js doesn't expose this yet, so we call REST directly.
 async function _setVoiceChannelStatus(channelId, status = "") {
   if (!channelId) return;
   const safe = String(status ?? "").slice(0, 100);
   try {
     await client.rest.put(`/channels/${channelId}/voice-status`, { body: { status: safe } });
   } catch (e) {
-    // Don't crash the bot if Discord rejects this (missing perms / feature disabled / endpoint changes).
     console.warn("[VC STATUS] Could not set voice channel status:", e?.rawError?.message || e?.message || e);
   }
 }
 function _getPlayerVoiceChannelId(player) {
   return player?.voiceId ?? player?.voiceChannelId ?? player?.options?.voiceId ?? null;
 }
-
 
 const kazagumo = new Kazagumo({
   defaultSearchEngine: "youtube",
@@ -1519,12 +1514,10 @@ async function handleMusicSlash(interaction) {
 
 client.once("clientReady", async () => {
   console.log("[READY] Logged in as " + client.user.tag);
-  client.user.setActivity("🎵 /play | .help", { type: ActivityType.Custom });
+  client.user.setActivity("Made By: @4zcy", { type: ActivityType.Custom });
 
   const MUSIC_NAMES = new Set(["play","skip","stop","pause","resume","nowplaying","queue","volume","loop","shuffle","seek","remove","skipto","clearqueue","lyrics","spotify","join","disconnect","movehere"]);
 
-  // Action commands rely on @mentions — prefix only, skip from slash
-  // Also skip commands that are prefix-only by nature
   const SLASH_SKIP = new Set([
     ...["slap","bonk","punch","kick","bite","yeet","poke","tickle","hug","pat","kiss","cuddle","feed","handhold","highfive","wave","handshake","blush","smile","laugh","cry","pout","stare","shrug","facepalm","dance","wink"],
     "say","announce","poll","poll2","stealemoji","addrole","removerole","massrole","lock","unlock","softban","clearsnipe",
