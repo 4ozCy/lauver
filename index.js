@@ -1507,7 +1507,7 @@ client.on("interactionCreate", async (interaction) => {
         const upcoming = [...player.queue].slice(0, 10);
         const c = new ContainerBuilder();
         c.addTextDisplayComponents(tx("## Queue"));
-        c.addTextDisplayComponents(tx("**Now Playing:** " + current.title + " · " + msToTime(current.length)));
+        c.addTextDisplayComponents(tx( current.title + " · " + msToTime(current.length)));
         if(upcoming.length){
           c.addSeparatorComponents(sp());
           c.addTextDisplayComponents(tx(upcoming.map((t,i)=>"**"+(i+1)+".** "+t.title+" · "+msToTime(t.length)).join("\n")));
