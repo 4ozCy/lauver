@@ -219,59 +219,81 @@ async function cleanupPlayerUI(player, reasonText = null) {
 }
 
 function buildNowPlaying(player, track) {
-  const loopLabels = { none: "Off", track: "Track", queue: "Queue" };
   const paused = player.paused;
   const cover = getTrackCover(track);
   const c = new ContainerBuilder();
 
-  c.addTextDisplayComponents(tx("## Now Playing"));
-
   if (cover) {
     c.addMediaGalleryComponents(
       new MediaGalleryBuilder().addItems(
-        new MediaGalleryItemBuilder().setURL(cover).setDescription(track.title?.slice(0, 256) || "Track cover"),
-      ),
+        new MediaGalleryItemBuilder()
+          .setURL(cover)
+          .setDescription(track.title?.slice(0, 256) || "Cover"),
+      )
     );
   }
 
   c.addTextDisplayComponents(
     tx(
-      "**" +
-        track.title +
-        "**\n" +
-        "👤 " +
-        (track.author || "Unknown") +
-        "   ⏱ " +
-        msToTime(track.length) +
-        "\n" +
-        "Requested by " +
-        (track.requester?.username ?? "Unknown") +
-        "\n" +
-        "Queue: " +
-        player.queue.length +
-        "   •   Loop: " +
-        (loopLabels[player.loop] ?? "Off") +
-        "   •   Volume: " +
-        player.volume +
-        "%",
-    ),
+      `## Now Playing - ${track.title}\n` +
+      `${track.author || "Unknown"}\n\n` +
+      `<:duration:1484157854192500089> ${msToTime(track.length)}\n` +
+      `<:user:14841578092085900366> ${track.requester?.username ?? "Unknown"}`
+    )
   );
 
   c.addSeparatorComponents(sp());
+
   c.addActionRowComponents(
     new ActionRowBuilder().addComponents(
-      new ButtonBuilder().setCustomId("music:playpause").setLabel(paused ? "Resume" : "Pause").setStyle(ButtonStyle.Secondary),
-      new ButtonBuilder().setCustomId("music:skip").setLabel("Skip").setStyle(ButtonStyle.Secondary),
-      new ButtonBuilder().setCustomId("music:queue").setLabel("Queue").setStyle(ButtonStyle.Secondary),
-    ),
+      new ButtonBuilder()
+        .setCustomId("music:playpause")
+        .setEmoji("<:pause:1484157403858473100>")
+        .setLabel(paused ? "Resume" : "Pause")
+        .setStyle(ButtonStyle.Secondary),
+
+      new ButtonBuilder()
+        .setCustomId("music:skip")
+        .setEmoji("<:skip:1484157534045601873>")
+        .setLabel("Skip")
+        .setStyle(ButtonStyle.Secondary),
+
+      new ButtonBuilder()
+        .setCustomId("music:queue")
+        .setEmoji("<:queue:1484157743282782368>")
+        .setLabel("Queue")
+        .setStyle(ButtonStyle.Secondary),
+    )
   );
+
   c.addActionRowComponents(
     new ActionRowBuilder().addComponents(
-      new ButtonBuilder().setCustomId("music:loop").setLabel("Loop").setStyle(ButtonStyle.Secondary),
-      new ButtonBuilder().setCustomId("music:volume").setLabel("Volume").setStyle(ButtonStyle.Secondary),
-      new ButtonBuilder().setCustomId("music:stop").setLabel("End Session").setStyle(ButtonStyle.Secondary),
-    ),
+      new ButtonBuilder()
+        .setCustomId("music:loop")
+        .setEmoji("<:loop:1484157617017192560>")
+        .setLabel("Repeat")
+        .setStyle(ButtonStyle.Secondary),
+
+      new ButtonBuilder()
+        .setCustomId("music:volume")
+        .setEmoji("<:volume:1484158726461067294>")
+        .setLabel("Volume")
+        .setStyle(ButtonStyle.Secondary),
+
+      new ButtonBuilder()
+        .setCustomId("music:stop")
+        .setEmoji("<:stop:1484157684948140063>")
+        .setLabel("End Session")
+        .setStyle(ButtonStyle.Secondary),
+    )
   );
+
+  return {
+    components: [c],
+    flags: F,
+    allowedMentions: { parse: [] },
+  };
+}
 
   return { components: [c], flags: F, allowedMentions: { parse: [] } };
 }
