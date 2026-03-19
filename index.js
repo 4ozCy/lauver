@@ -34,16 +34,12 @@ const client = new Client({
 
 const LAVA_NODES = [{ url: "lava-v4.ajieblogs.eu.org:443", auth: "https://dsc.gg/ajidevserver", secure: true }];
 
-// ---- Voice Channel Status (currently playing track) ----
-// Discord shows a short "channel status" line under a voice channel name.
-// discord.js doesn't expose this yet, so we call REST directly.
 async function _setVoiceChannelStatus(channelId, status = "") {
   if (!channelId) return;
   const safe = String(status ?? "").slice(0, 100);
   try {
     await client.rest.put(`/channels/${channelId}/voice-status`, { body: { status: safe } });
   } catch (e) {
-    // Don't crash the bot if Discord rejects this (missing perms / feature disabled / endpoint changes).
     console.warn("[VC STATUS] Could not set voice channel status:", e?.rawError?.message || e?.message || e);
   }
 }
@@ -236,9 +232,8 @@ function buildNowPlaying(player, track) {
   c.addTextDisplayComponents(
     tx(
       `## Now Playing - ${track.title}\n` +
-      `${track.author || "Unknown"}\n\n` +
-      `<:duration:1484157854192500089> ${msToTime(track.length)}\n` +
-      `<:user:14841578092085900366> ${track.requester?.username ?? "Unknown"}`
+      `<:user:1484157809208590366> ${track.author || "Unknown"} **|** <:duration:1484157854192500819> ${msToTime(track.length)}\n` +
+      `Requested by ${track.requester?.username ?? "Unknown"}`
     )
   );
 
@@ -248,19 +243,19 @@ function buildNowPlaying(player, track) {
     new ActionRowBuilder().addComponents(
       new ButtonBuilder()
         .setCustomId("music:playpause")
-        .setEmoji("<:pause:1484157403858473100>")
+        .setEmoji({ name: "pause", id: "1484157403858473100" })
         .setLabel(paused ? "Resume" : "Pause")
         .setStyle(ButtonStyle.Secondary),
 
       new ButtonBuilder()
         .setCustomId("music:skip")
-        .setEmoji("<:skip:1484157534045601873>")
+        .setEmoji({ name: "skip", id: "1484157534045601873" })
         .setLabel("Skip")
         .setStyle(ButtonStyle.Secondary),
 
       new ButtonBuilder()
         .setCustomId("music:queue")
-        .setEmoji("<:queue:1484157743282782368>")
+        .setEmoji({ name: "queue", id: "1484157743282782368" })
         .setLabel("Queue")
         .setStyle(ButtonStyle.Secondary),
     )
@@ -270,19 +265,19 @@ function buildNowPlaying(player, track) {
     new ActionRowBuilder().addComponents(
       new ButtonBuilder()
         .setCustomId("music:loop")
-        .setEmoji("<:loop:1484157617017192560>")
+        .setEmoji({ name: "loop", id: "1484157617017192560" })
         .setLabel("Repeat")
         .setStyle(ButtonStyle.Secondary),
 
       new ButtonBuilder()
         .setCustomId("music:volume")
-        .setEmoji("<:volume:1484158726461067294>")
+        .setEmoji({ name: "volume", id: "1484158726461067294" })
         .setLabel("Volume")
         .setStyle(ButtonStyle.Secondary),
 
       new ButtonBuilder()
         .setCustomId("music:stop")
-        .setEmoji("<:stop:1484157684948140063>")
+        .setEmoji({ name: "stop", id: "1484157684948140063" })
         .setLabel("End Session")
         .setStyle(ButtonStyle.Secondary),
     )
@@ -1679,12 +1674,10 @@ async function handleMusicSlash(interaction) {
 
 client.once("clientReady", async () => {
   console.log("[READY] Logged in as " + client.user.tag);
-  client.user.setActivity("🎵 /play | .help", { type: ActivityType.Custom });
+  client.user.setActivity("YOU TOOK ME FOR A FOOL", { type: ActivityType.Custom });
 
   const MUSIC_NAMES = new Set(["play","skip","stop","pause","resume","nowplaying","queue","volume","loop","shuffle","seek","remove","skipto","clearqueue","lyrics","spotify","join","disconnect","movehere"]);
 
-  // Action commands rely on @mentions — prefix only, skip from slash
-  // Also skip commands that are prefix-only by nature
   const SLASH_SKIP = new Set([
     ...["slap","bonk","punch","kick","bite","yeet","poke","tickle","hug","pat","kiss","cuddle","feed","handhold","highfive","wave","handshake","blush","smile","laugh","cry","pout","stare","shrug","facepalm","dance","wink"],
     "say","announce","poll","poll2","stealemoji","addrole","removerole","massrole","lock","unlock","softban","clearsnipe",
@@ -1727,8 +1720,6 @@ client.once("clientReady", async () => {
   const MAX_GLOBAL_SLASH = 100;
   const maxGeneral = MAX_GLOBAL_SLASH - musicSlash.length;
 
-  // Discord only allows 100 global application commands.
-  // If we exceed it, the entire PUT fails and *no* commands get registered.
   let trimmedPrefix = prefixSlash;
   if (trimmedPrefix.length > maxGeneral) {
     const dropped = trimmedPrefix.slice(maxGeneral).map(c => c.name).join(", ");
