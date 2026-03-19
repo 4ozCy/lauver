@@ -295,9 +295,6 @@ function buildNowPlaying(player, track) {
   };
 }
 
-  return { components: [c], flags: F, allowedMentions: { parse: [] } };
-}
-
 async function refreshNP(player) {
   const track = player.queue?.current; if (!track) return;
   const msg = player.data.get("npMessage"); if (!msg) return;
@@ -307,7 +304,6 @@ async function refreshNP(player) {
 kazagumo.on("playerStart", async (player, track) => {
   const channel = player.data.get("channel"); if (!channel) return;
   player.data.set("lastTrack", track);
-  // update the VC status to the current track title
   void _setVoiceChannelStatus(_getPlayerVoiceChannelId(player), track?.title ? `🎵 ${track.title}` : "");
   const data = buildNowPlaying(player, track);
   const old  = player.data.get("npMessage");
