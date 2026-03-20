@@ -2752,7 +2752,8 @@ client.on("interactionCreate", async (interaction) =>
 			{
 				const vol = Math.min(100, player.volume + 10);
 				player.setVolume(vol);
-				await refreshNP(player);
+                player.volume = vol;
+                await refreshNP(player);
 				return interaction.reply(ephOk("## 🔊 Volume → **" + vol + "%**"));
 			}
 			if(action === "clearqueue")
