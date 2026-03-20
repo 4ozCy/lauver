@@ -469,7 +469,7 @@ function buildNowPlaying(player, track)
 	{
 		c.addMediaGalleryComponents(new MediaGalleryBuilder().addItems(new MediaGalleryItemBuilder().setURL(cover).setDescription(track.title?.slice(0, 256) || "Cover"), ));
 	}
-	c.addTextDisplayComponents(tx(`## Now Playing - ${track.title}\n` + `<:user:1484462980631625780> ${track.author || "Unknown"}\u2003•\u2003<:duration:1484462933240188989> ${msToTime(track.length)}\u2003•\u2003<:loop:1484463176547565700> ${loopMap[player.loop ?? "none"] ?? "Off"}\u2003•\u2003<:volume:1484463072683888741> ${player.volume}%\n` + `-# Requested by ${track.requester?.username ?? "Unknown"}`));
+	c.addTextDisplayComponents(tx(`## Now Playing - ${track.title}\n` + `<:user:1484462980631625780> ${track.author || "Unknown"}\u2003•\u2003<:duration:1484462933240188989> ${msToTime(track.length)}\u2003•\u2003<:loop:1484463176547565700> ${loopMap[player.loop ?? "none"] ?? "Off"}\u2003•\u2003<:volume:1484463072683888741> ${player.data?.get("volume") ?? player.volume}%\n` + `-# Requested by ${track.requester?.username ?? "Unknown"}`));
 	c.addSeparatorComponents(sp());
 	c.addActionRowComponents(new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId("music:playpause").setEmoji(
 	{
@@ -2743,14 +2743,15 @@ client.on("interactionCreate", async (interaction) =>
 			}
 			if(action === "voldown")
 			{
-				const vol = Math.max(10, player.volume - 10);
+				const vol=Math.min(100,player.volume+10);player.setVolume(vol);player.data.set("volume", vol);await refreshNP(player);
 				player.setVolume(vol);
-				await refreshNP(player);
+                player.data.set("volume", vol);
+                await refreshNP(player);
 				return interaction.reply(ephOk("## 🔉 Volume → **" + vol + "%**"));
 			}
 			if(action === "volup")
 			{
-				const vol = Math.min(100, player.volume + 10);
+				const vol=Math.min(100,player.volume+10);player.setVolume(vol);player.data.set("volume", vol);await refreshNP(player);
 				player.setVolume(vol);
                 player.volume = vol;
                 await refreshNP(player);
@@ -2803,6 +2804,7 @@ client.on("interactionCreate", async (interaction) =>
 			const vol = parseInt(raw, 10);
 			if(isNaN(vol) || vol < 1 || vol > 100) return interaction.reply(ephErr("Please enter a number between 1 and 100."));
 			player.setVolume(vol);
+			player.data.set("volume", vol);
 			await refreshNP(player);
 			return interaction.reply(ephOk("## 🔊 Volume → **" + vol + "%**"));
 		}
@@ -3115,7 +3117,8 @@ async function handleMusicSlash(interaction)
 	{
 		const vol = interaction.options.getInteger("level");
 		player.setVolume(vol);
-		await refreshNP(player);
+        player.data.set("volume", vol);
+        await refreshNP(player);
 		return ok("## 🔊 Volume → **" + vol + "%**");
 	}
 	if(name === "loop")
