@@ -1674,7 +1674,7 @@ async function handleMusicSlash(interaction) {
 
 client.once("clientReady", async () => {
   console.log("[READY] Logged in as " + client.user.tag);
-  client.user.setActivity("YOU TOOK ME FOR A FOOL", { type: ActivityType.Custom });
+  client.user.setActivity("Made By: @4zcy", { type: ActivityType.Custom });
 
   const MUSIC_NAMES = new Set(["play","skip","stop","pause","resume","nowplaying","queue","volume","loop","shuffle","seek","remove","skipto","clearqueue","lyrics","spotify","join","disconnect","movehere"]);
 
