@@ -232,7 +232,7 @@ function buildNowPlaying(player, track) {
 c.addTextDisplayComponents(
     tx(
       `## Now Playing - ${track.title}\n` +
-      `<:user:1484157809208590366> ${track.author || "Unknown"} <:duration:1484157854192500819> ${msToTime(track.length)} <:loop:1484157617017192560> ${player.repeatMode ?? "off"} <:volume:1484158726461067294> ${player.volume}%\n` +
+      `<:user:1484157809208590366> ${track.author || "Unknown"}  <:duration:1484157854192500819> ${msToTime(track.length)}  <:loop:1484157617017192560> ${player.repeatMode ?? "off"}  <:volume:1484158726461067294> ${player.volume}%\n` +
       `-# Requested by ${track.requester?.username ?? "Unknown"}`
     )
   );
