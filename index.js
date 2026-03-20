@@ -469,7 +469,7 @@ function buildNowPlaying(player, track)
 	{
 		c.addMediaGalleryComponents(new MediaGalleryBuilder().addItems(new MediaGalleryItemBuilder().setURL(cover).setDescription(track.title?.slice(0, 256) || "Cover"), ));
 	}
-	c.addTextDisplayComponents(tx(`## Now Playing - ${track.title}\n` + `<:user:1484462980631625780> ${track.author || "Unknown"} • <:duration:1484462933240188989> ${msToTime(track.length)} • <:loop:1484463176547565700> ${loopMap[player.loop ?? "none"] ?? "Off"} • <:volume:1484463072683888741> ${player.volume}%\n` + `-# Requested by ${track.requester?.username ?? "Unknown"}`));
+	c.addTextDisplayComponents(tx(`## Now Playing - ${track.title}\n` + `<:user:1484462980631625780> ${track.author || "Unknown"}\u2003•\u2003<:duration:1484462933240188989> ${msToTime(track.length)}\u2003•\u2003<:loop:1484463176547565700> ${loopMap[player.loop ?? "none"] ?? "Off"}\u2003•\u2003<:volume:1484463072683888741> ${player.volume}%\n` + `-# Requested by ${track.requester?.username ?? "Unknown"}`));
 	c.addSeparatorComponents(sp());
 	c.addActionRowComponents(new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId("music:playpause").setEmoji(
 	{
